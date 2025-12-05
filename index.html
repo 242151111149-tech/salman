@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Belajar Persamaan Kuadrat</title>
+  <style>
+    /* --- CSS (disempurnakan, tetap inline tetapi terstruktur seperti file CSS terpisah) --- */
+    :root{
+      --maroon: #5B0000;
+      --maroon-2: #8B1E3F;
+      --accent: #F7F1EE;
+      --muted: #F0E9E9;
+      --text: #222;
+      --card: #ffffff;
+      --shadow: rgba(0,0,0,0.18);
+      --glass: rgba(255,255,255,0.06);
+    }
+
+    /* Reset dasar */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;background:linear-gradient(180deg,var(--maroon), #3a0000);color:var(--text)}
+
+    /* Kontainer utama: pertahankan grid dua kolom */
+    .container{max-width:1100px;margin:30px auto;padding:18px;display:grid;grid-template-columns:260px 1fr;gap:20px}
+
+    /* Header */
+    header.site-header{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:12px;background:var(--glass);backdrop-filter:blur(6px)}
+    header .brand{color:var(--accent);font-weight:700;font-size:1.1rem}
+    header p.subtitle{margin:0;color:rgba(247,241,238,0.9);font-size:0.9rem}
+
+    /* Sidebar */
+    nav.sidebar{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 6px 18px var(--shadow);height:min-content}
+    nav.sidebar h3{margin:6px 0 12px 0;color:var(--maroon-2)}
+    nav.sidebar ul{list-style:none;padding:0;margin:0}
+    nav.sidebar li{margin:6px 0}
+    nav.sidebar a{display:block;padding:8px 10px;border-radius:6px;text-decoration:none;color:#333}
+    nav.sidebar a.active{background:var(--muted);font-weight:600}
+
+    /* Konten utama */
+    main.content{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 18px var(--shadow)}
+    main.content h2{margin-top:0;color:var(--maroon-2)}
+    section.lesson{margin-bottom:18px}
+    .card{background:linear-gradient(180deg,#fff,#f8f6f6);padding:14px;border-radius:10px;margin-bottom:12px}
+
+    /* Grid internal dua kolom untuk bagian contoh + aside */
+    .cols{display:grid;grid-template-columns:1fr 360px;gap:16px}
+    .examples ol{padding-left:18px}
+
+    /* Footer */
+    footer{grid-column:1/-1;text-align:center;color:rgba(247,241,238,0.8);font-size:0.9rem;margin-top:6px}
+
+    /* Responsif */
+    @media (max-width:900px){
+      .container{grid-template-columns:1fr;padding:14px}
+      .cols{grid-template-columns:1fr}
+      .site-header{flex-wrap:wrap}
+    }
+
+    /* Form dan komponen kecil */
+    label{display:block;margin-top:8px;font-size:0.9rem}
+    input[type="number"], input[type="text"]{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:6px}
+    button{background:var(--maroon-2);color:#fff;border:none;padding:10px 12px;border-radius:8px;cursor:pointer;margin-top:10px}
+    .result{padding:10px;border-radius:8px;background:#f6f4f4;margin-top:10px}
+    pre.code{background:#111;padding:12px;color:#fff;border-radius:8px;overflow:auto}
+
+    /* Aksesibilitas kecil */
+    input[readonly]{background:#f3f3f3}
+  </style>
+
+  <!-- Math rendering: MathJax v3 (TeX input) -->
+  <script>
+    window.MathJax = {
+      tex: {inlineMath: [['$','$'], ['\(','\)']]},
+      options: {skipHtmlTags: ['script','noscript','style','textarea','pre']}
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#8B1E3F,#5B0000);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700">PQ</div>
+      <div>
+        <div class="brand">Belajar Persamaan Kuadrat</div>
+        <p class="subtitle">Materi ini menggantikan konten pecahan — struktur halaman dipertahankan.</p>
+      </div>
+    </header>
+
+    <nav class="sidebar" aria-label="Navigasi Materi">
+      <h3>Daftar Isi</h3>
+      <ul>
+        <li><a href="#intro" class="active">Pengantar</a></li>
+        <li><a href="#rumus">Rumus & Konsep</a></li>
+        <li><a href="#contoh">Contoh Soal</a></li>
+        <li><a href="#latihan">Latihan Interaktif</a></li>
+        <li><a href="#aplikasi">Aplikasi & Visual</a></li>
+        <li><a href="#referensi">Ringkasan & Referensi</a></li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <section id="intro" class="lesson">
+        <h2>Pengantar Persamaan Kuadrat</h2>
+        <div class="card">
+          <p>Persamaan kuadrat adalah persamaan polinomial derajat dua yang umumnya ditulis dalam bentuk:</p>
+          <p style="font-weight:600;">ax² + bx + c = 0</p>
+          <p>di mana <em>a</em>, <em>b</em>, dan <em>c</em> adalah bilangan nyata dan <em>a ≠ 0</em>. Tujuan utama mempelajari persamaan kuadrat adalah mencari nilai <em>x</em> yang memenuhi persamaan tersebut (akar/solusi).</p>
+        </div>
+      </section>
+
+      <section id="rumus" class="lesson">
+        <h2>Rumus & Konsep Penting</h2>
+        <div class="card">
+          <h4>1. Rumus Kuadrat (Rumus ABC)</h4>
+          <p>Untuk ax² + bx + c = 0, solusi x diberikan oleh:</p>
+          <pre class="code">x = (-b ± √(b² - 4ac)) / (2a)</pre>
+          <p>Diskriminan D = b² - 4ac menentukan banyaknya solusi:</p>
+          <ul>
+            <li>D &gt; 0 → dua solusi real berbeda</li>
+            <li>D = 0 → satu solusi real kembar</li>
+            <li>D &lt; 0 → dua solusi kompleks</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>2. Bentuk Faktorisasi</h4>
+          <p>Jika akar persamaan diketahui (r1, r2), maka:</p>
+          <p style="font-style:italic">a(x - r1)(x - r2) = 0</p>
+        </div>
+      </section>
+
+      <div class="cols">
+        <div>
+          <section id="contoh" class="lesson examples">
+            <h2>Contoh Soal Diselesaikan</h2>
+
+            <div class="card">
+              <h4>Contoh 1 — Dua akar real</h4>
+              <p>Selidiki akar dari: 2x² - 3x - 5 = 0</p>
+              <p><strong>Langkah singkat:</strong></p>
+              <ol>
+                <li>Hitung diskriminan D = $D = (-3)^2 - 4·2·(-5) = 9 + 40 = 49$</li>
+                <li>Karena D = 49 &gt; 0, ada dua akar real.</li>
+                <li>Akar: x = (3 ± √49)/(4) → x₁ = (3+7)/4 = 10/4 = 2.5; x₂ = (3-7)/4 = -1</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h4>Contoh 2 — Akar Kembar</h4>
+              <p>Persamaan: x² - 6x + 9 = 0</p>
+              <ol>
+                <li>D = 36 - 36 = 0 → akar kembar</li>
+                <li>x = 6 / 2 = 3 → x = 3 (dua kali)</li>
+              </ol>
+            </div>
+
+            <div class="card">
+              <h4>Contoh 3 — Akar Kompleks</h4>
+              <p>Persamaan: x² + 4x + 13 = 0</p>
+              <ol>
+                <li>D = 16 - 52 = -36 &lt; 0 → akar kompleks</li>
+                <li>Akar: x = (-4 ± √(-36)) / 2 → x = -2 ± 3i</li>
+              </ol>
+            </div>
+
+          </section>
+
+          <section id="latihan" class="lesson">
+            <h2>Latihan Interaktif</h2>
+            <div class="card">
+              <p>Masukkan koefisien <strong>a</strong>, <strong>b</strong>, dan <strong>c</strong> untuk melihat akar persamaan.</p>
+              <label>a</label>
+              <input type="number" id="a" step="any" value="1" />
+              <label>b</label>
+              <input type="number" id="b" step="any" value="-3" />
+              <label>c</label>
+              <input type="number" id="c" step="any" value="2" />
+              <button id="solveBtn">Hitung Akar</button>
+              <div id="result" class="result" aria-live="polite">Hasil akan tampil di sini.</div>
+            </div>
+
+            <div class="card">
+              <h4>Soal Latihan (Untuk dikerjakan tanpa kalkulator)</h4>
+              <ol>
+                <li>Selesaikan: x² - 5x + 6 = 0</li>
+                <li>Selesaikan: 3x² + x - 4 = 0</li>
+                <li>Tentukan jenis akar: 4x² + 4x + 1 = 0</li>
+              </ol>
+            </div>
+          </section>
+        </div>
+
+        <aside>
+          <section id="aplikasi" class="card">
+            <h3>Aplikasi & Visual</h3>
+            <p>Persamaan kuadrat muncul pada gerak parabola, desain lensa sederhana, serta optimasi fungsi kuadrat. Di sini ada utilitas cepat untuk melihat diskriminan dan bentuk akar.</p>
+            <div style="margin-top:8px">
+              <label>Diskriminan (D)</label>
+              <input id="dDisplay" type="text" readonly />
+            </div>
+            <div style="margin-top:10px">
+              <button id="exampleBtn">Masukkan contoh: 1x² - 3x + 2</button>
+            </div>
+          </section>
+
+          <section id="referensi" class="card">
+            <h4>Ringkasan Cepat</h4>
+            <ul>
+              <li>Rumus kuadrat menyelesaikan ax²+bx+c=0</li>
+              <li>Periksa diskriminan sebelum menentukan metode</li>
+              <li>Faktorisasi praktis jika bilangan bulat cocok</li>
+            </ul>
+            <p style="font-size:0.85rem;color:#555;margin-top:8px">Sumber: disusun untuk keperluan pembelajaran—modul ini menggantikan materi pecahan.</p>
+          </section>
+        </aside>
+      </div>
+
+      <footer>
+        <small>Hak cipta &copy; 2025 — Materi Persamaan Kuadrat. Struktur halaman mengikuti situs asli; hanya isi materi dan warna latar diubah.</small>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Pertahankan interaktivitas sederhana — menghitung diskriminan dan akar
+    function solveQuadratic(a,b,c){
+      a = Number(a); b = Number(b); c = Number(c);
+      if(a === 0) return { error: 'a tidak boleh 0 (bukan persamaan kuadrat)'};
+      var D = b*b - 4*a*c;
+      var sqrtD = Math.sqrt(Math.abs(D));
+      var twoa = 2*a;
+      if(D > 0){
+        var x1 = (-b + sqrtD)/twoa; var x2 = (-b - sqrtD)/twoa;
+        return {D:D, roots:[x1,x2], type:'dua real berbeda'};
+      } else if(D === 0){
+        var x = -b / twoa; return {D:D, roots:[x], type:'akar kembar'};
+      } else {
+        var real = -b / twoa; var imag = sqrtD / twoa; // sqrtD adalah sqrt(|D|)
+        return {D:D, roots:[real + ' + ' + imag + 'i', real + ' - ' + imag + 'i'], type:'kompleks'};
+      }
+    }
+
+    document.getElementById('solveBtn').addEventListener('click', function(){
+      var a = document.getElementById('a').value;
+      var b = document.getElementById('b').value;
+      var c = document.getElementById('c').value;
+      var out = solveQuadratic(a,b,c);
+      var r = document.getElementById('result');
+      var dDisp = document.getElementById('dDisplay');
+      if(out.error){ r.textContent = out.error; dDisp.value = ''; return; }
+      dDisp.value = out.D;
+      if(out.type === 'dua real berbeda'){
+        r.innerHTML = '<strong>Diskriminan:</strong> ' + out.D + '<br><strong>Akar:</strong> x₁ = ' + Number(out.roots[0]).toFixed(6) + ', x₂ = ' + Number(out.roots[1]).toFixed(6);
+      } else if(out.type === 'akar kembar'){
+        r.innerHTML = '<strong>Diskriminan:</strong> ' + out.D + '<br><strong>Akar kembar:</strong> x = ' + Number(out.roots[0]).toFixed(6);
+      } else {
+        r.innerHTML = '<strong>Diskriminan:</strong> ' + out.D + '<br><strong>Akar kompleks:</strong> ' + out.roots[0] + ' , ' + out.roots[1];
+      }
+    });
+
+    document.getElementById('exampleBtn').addEventListener('click', function(){
+      document.getElementById('a').value = 1;
+      document.getElementById('b').value = -3;
+      document.getElementById('c').value = 2;
+      document.getElementById('solveBtn').click();
+    });
+
+    // Smooth scrolling for internal links in the preserved structure
+    document.querySelectorAll('nav.sidebar a').forEach(function(el){
+      el.addEventListener('click', function(e){
+        e.preventDefault();
+        document.querySelectorAll('nav.sidebar a').forEach(x=>x.classList.remove('active'));
+        el.classList.add('active');
+        var id = el.getAttribute('href');
+        document.querySelector(id).scrollIntoView({behavior:'smooth', block:'start'});
+      })
+    });
+  </script>
+
+  <script>
+    // Slide navigation (each major section / block becomes one slide) -- does not change HTML structure
+    (function(){
+      const container = document.querySelector('main.content');
+      // Collect top-level sections and the .cols block as slides to preserve structure
+      const nodes = Array.from(container.children).filter(n => n.tagName.toLowerCase() === 'section' || n.classList.contains('cols'));
+      const slides = nodes;
+      let idx = 0;
+
+      function show(i){
+        slides.forEach((s, j) => {
+          s.style.display = (i === j) ? '' : 'none';
+        });
+        // update active link in sidebar
+        const links = document.querySelectorAll('nav.sidebar a');
+        links.forEach(link => link.classList.remove('active'));
+        // try to mark corresponding link if section has id
+        const current = slides[i];
+        const id = current.id || current.querySelector('section')?.id;
+        if(id){
+          const link = document.querySelector(`nav.sidebar a[href="#${id}"]`);
+          if(link) link.classList.add('active');
+        }
+      }
+
+      // create nav buttons
+      const prev = document.createElement('button'); prev.textContent = 'Prev';
+      const next = document.createElement('button'); next.textContent = 'Next';
+      [prev,next].forEach(b=>{b.className='nav-btn'; document.body.appendChild(b)});
+      prev.style.left = '20px'; prev.style.bottom = '20px'; prev.style.position = 'fixed';
+      next.style.right = '20px'; next.style.bottom = '20px'; next.style.position = 'fixed';
+
+      prev.addEventListener('click', ()=>{ idx = (idx-1+slides.length)%slides.length; show(idx); MathJax.typesetPromise(); });
+      next.addEventListener('click', ()=>{ idx = (idx+1)%slides.length; show(idx); MathJax.typesetPromise(); });
+
+      // auto-slide
+      let auto = setInterval(()=>{ idx = (idx+1)%slides.length; show(idx); MathJax.typesetPromise(); }, 10000);
+      // pause on mouseover
+      document.addEventListener('mouseover', ()=> clearInterval(auto));
+      document.addEventListener('mouseout', ()=> { auto = setInterval(()=>{ idx = (idx+1)%slides.length; show(idx); MathJax.typesetPromise(); }, 10000); });
+
+      // initialize: hide all except first
+      show(0);
+      // re-render math on load
+      if(window.MathJax) MathJax.typesetPromise();
+
+      // expose controls (optional)
+      window._slides = { show, next: ()=>{ next.click() }, prev: ()=>{ prev.click() } };
+    })();
+  </script>
+
+</body>
+</html>

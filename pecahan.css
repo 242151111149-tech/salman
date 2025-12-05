@@ -1,0 +1,124 @@
+:root{
+  --bg:#f7f9fc;
+  --accent:#0b6cf0;
+  --muted:#6b7280;
+  --card:#ffffff;
+  --sidebar:#0b6cf0;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111827;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+  display:flex;
+  min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+  width:260px;
+  background: linear-gradient(180deg, var(--sidebar) 0%, #0a57c9 100%);
+  color: #fff;
+  padding:24px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.brand h1{margin:0;font-size:20px;letter-spacing:0.4px}
+.brand p{margin:0;font-size:13px;opacity:0.9}
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:12px;
+}
+.menu a{
+  color:rgba(255,255,255,0.95);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  font-size:14px;
+}
+.menu a.active,
+.menu a:hover{
+  background: rgba(255,255,255,0.12);
+}
+
+/* Main content */
+.content{
+  flex:1;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.topbar h2{margin:0;font-size:18px;color:var(--muted)}
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  box-shadow: 0 6px 20px rgba(11,108,240,0.06);
+}
+.card h3{margin-top:0}
+
+/* math blocks */
+.math{font-style:italic}
+
+/* examples */
+.example{
+  background:#f3f7ff;
+  border-left:4px solid var(--accent);
+  padding:10px;
+  margin-top:10px;
+  border-radius:6px;
+}
+
+/* quiz */
+.quiz .q{
+  border:1px dashed #e6eefc;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+.quiz input.answer{
+  width:200px;
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid #d1d5db;
+  margin-right:8px;
+}
+.quiz button.check-btn{
+  padding:8px 12px;
+  border-radius:6px;
+  border:0;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+}
+.quiz .feedback{margin-top:8px;font-weight:600}
+
+/* footer */
+.page-foot{text-align:center;color:var(--muted);font-size:13px;padding:16px 0}
+
+/* responsive */
+@media (max-width:900px){
+  .sidebar{display:none}
+  .container{flex-direction:column}
+  .content{padding:18px}
+}
